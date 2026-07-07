@@ -1,0 +1,186 @@
+node:
+  dt_id: "emergency4"
+  dt_type: "vehicle"
+  gateway_id: "gw-ev-emergency4"
+  domain: "traffic"
+  capabilities:
+    - "ev_state_publish"
+    - "priority_request_publish"
+    - "route_advice_consume"
+
+  communication:
+    # Optional run-isolation namespace. Can be overridden via CLI: --topic-namespace
+    topic_namespace: ""
+    internal_event_bus:
+      kind: "mqtt"
+      broker:
+        host: "127.0.0.1"
+        port: 1883
+      topics:
+        publish:
+          state: "rw/vehicle_agent/emergency4/state"
+        subscribe:
+          route_advice: "rw/vehicle_agent/emergency4/route_advice"
+
+    federation_event_bus:
+      kind: "mqtt"
+      broker:
+        host: "127.0.0.1"
+        port: 1883
+      topics:
+        publish:
+          state: "federation/v1/state/ev/emergency4"
+          ev_request: "federation/ev/request/{tls_id}"
+        subscribe:
+          route_advice: "federation/corridor/route_advice/emergency4"
+
+    topic_map:
+      rules:
+        - name: "ev_state_up"
+          direction: "local_to_fed"
+          subscribe_topic: "rw/vehicle_agent/emergency4/state"
+          publish_topic: "federation/v1/state/ev/emergency4"
+          event_type: "EmergencyVehicleState"
+        - name: "route_advice_down"
+          direction: "fed_to_local"
+          subscribe_topic: "federation/corridor/route_advice/emergency4"
+          publish_topic: "rw/vehicle_agent/emergency4/route_advice"
+          event_type: "RouteAdvice"
+
+    # Monitoring-only subscriptions consumed by StateManager/EventManager
+    # (no command routing side effects).
+    monitor:
+      rules:
+        - name: "ev_local_state_observed"
+          source: "local"
+          kind: "state"
+          subscribe_topic: "rw/vehicle_agent/emergency4/state"
+          state_key: "monitor.ev.state.emergency4"
+        - name: "intersection_state_seen"
+          source: "federation"
+          kind: "state"
+          subscribe_topic: "federation/v1/state/intersection/+"
+          state_key: "monitor.intersection.state.{source_dt_id}"
+        - name: "intersection_event_seen"
+          source: "federation"
+          kind: "event"
+          subscribe_topic: "federation/v1/event/intersection/+"
+          event_name: "monitor.intersection.event"
+
+  protocol_adaptation:
+    http_state_pull:
+      enabled: true
+      # real-world.py built-in EV state endpoint:
+      # --ev-http-state-server-enable --ev-http-state-server-port 18083
+      url: "http://127.0.0.1:18083/vehicle_agent/emergency4/state"
+      period_sec: 0.2
+      timeout_sec: 2.5
+      max_next_tls: 1
+      default_delta_sec: 2.0
+      source_service: "federation_node_manager.ev_adapter"
+      source_tag: "fnm_http"
+      ev_request_topic_prefix: "federation/ev/request"
+      request_dedupe_enabled: true
+      request_min_sim_interval_sec: 1.0
+      request_dedupe_distance_epsilon_m: 0.25
+      request_sim_time_bucket_sec: 1.0
+      request_bucket_dedupe_enabled: true
+      emit_state_trace: true
+      error_backoff_max_sec: 2.0
+
+  federation:
+    membership_register_topic: "federation/membership/register"
+    membership_heartbeat_topic: "federation/membership/heartbeat"
+    catalog_upsert_topic: "federation/catalog/upsert"
+    heartbeat_interval_sec: 5.0
+    catalog_interval_sec: 20.0
+
+  # Optional decentralized Federation Context Manager (FCM) inside this FNM.
+  # Keep disabled to preserve legacy behavior; enable for discovery-driven peer gating.
+  federation_context:
+    enabled: true
+    selection_policy_name: "transport_ev_corridor"
+    selection_policy:
+      name: "transport_ev_corridor"
+      allow_fallback_without_route: true
+      prefer_forward_only: true
+      use_next_tls_order_when_route_missing: true
+      max_candidates_min: 3
+      max_candidates_max: 8
+      rank_weights:
+        route_order: 1.0
+        proximity_m: 1.0
+      route_backward_penalty: 1000.0
+      distance_unknown_penalty: 1000000000.0
+      route_unknown_penalty: 1000000000.0
+    query_enabled: true
+    query_interval_sec: 2.0
+    query_periodic_refresh_sec: 2.0
+    query_on_context_change: false
+    query_context_change_min_interval_sec: 2.0
+    query_context_stable_suppress_sec: 0.0
+    query_idle_suspend_sec: 0.0
+    query_idle_suspend_log_cooldown_sec: 0.0
+    peer_ttl_sec: 30.0
+    snapshot_interval_sec: 2.0
+    fail_open: true
+    result_mode: "service"
+    discovery_node_dedup: true
+    max_results: 50
+    query_require_valid_context: true
+    query_require_complete_context: false
+    query_min_route_len: 0
+    query_skip_log_cooldown_sec: 2.0
+    keep_last_valid_context: true
+    valid_context_hold_sec: 60.0
+    hold_peers_without_context: true
+    hold_peers_max_sec: 60.0
+    min_active_members_before_query: 0
+    query_startup_grace_sec: 0.0
+    peer_hysteresis_min_hold_sec: 10.0
+    peer_change_window_sec: 0.0
+    peer_change_max_add: 0
+    discovery_query_topic: "federation/discovery/query"
+    discovery_reply_prefix: "federation/discovery/resp"
+    discovery_event_filter: "state,event,request,decision"
+    discovery_purpose: "fnm_fcm"
+    role_filter: "TrafficLightSystem"
+    # Match catalog entry semantics emitted by intersection FNMs:
+    # service_name == topic_map rule name, event_type == translated event suffix.
+    discovery_service_names: ["intersection_state_up", "intersection_events_up", "coord_request_down", "coord_decision_down"]
+    discovery_directions: ["local_to_fed", "fed_to_local", "bidirectional"]
+    discovery_capabilities: ["intersection_state_publish", "coordination_event_publish", "coordination_artifact_consume"]
+    discovery_status_filters: ["ACTIVE", "REGISTERED", "ALIVE"]
+    require_active_membership: true
+    active_member_statuses: "ACTIVE,REGISTERED,ALIVE"
+    context_gate_enabled: true
+    context_back_hops: 1
+    context_max_candidates: 6
+    membership_state_topic: "federation/membership/state"
+    membership_events_topic: "federation/membership/events"
+
+  dt_profile:
+    dt_description: "Emergency vehicle DT with HTTP-state protocol adaptation via FNM"
+    geo_scope:
+      type: "city"
+      city: "Madrid"
+      zone: "short_area"
+      network: "madrid_short_area"
+      id: "ev.emergency4"
+    policy_tags: ["research", "emergency"]
+    qos_sla:
+      update_period_sec: 1.0
+      latency_budget_ms: 500.0
+      availability_target: "best_effort"
+    interface_version: "federation.node.manager.min.v1"
+    ownership:
+      organization: "ASIA Lab"
+      domain: "smart_mobility"
+      operator: "simulation"
+
+  data_manager:
+    enabled: true
+    base_dir: "./tmp/fnm_data"
+    run_id: ""
+    persist_raw_messages: true
+    persist_manifest: true

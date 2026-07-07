@@ -1,0 +1,12 @@
+<configuration>
+    <input>
+        <net-file value="madrid_short_area.net.xml"/>
+        <route-files value="madrid_traffic.rou.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="3600"/>
+        <step-length value="0.5"/>
+        <time-to-teleport value="-1" />
+    </time>
+</configuration>

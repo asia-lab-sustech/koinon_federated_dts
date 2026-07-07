@@ -1,0 +1,165 @@
+{
+  "template": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/fnm_intersection_node400.yml",
+  "ev_template": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/fnm_ev_emergency1.yml",
+  "route_file": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/tmp/madrid_master_2000_6ev.rou.xml",
+  "net_file": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/madrid_short_area.net.xml",
+  "ev_ids": [
+    "emergency1",
+    "emergency2",
+    "emergency3",
+    "emergency4",
+    "emergency5"
+  ],
+  "mode": "per-ev",
+  "out_root": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch",
+  "per_ev": {
+    "emergency1": {
+      "n_tls": 12,
+      "tls_ids": [
+        "Node490",
+        "Node488",
+        "Node483",
+        "Node477",
+        "Node470",
+        "Node465",
+        "Node450",
+        "Node437",
+        "Node423",
+        "Node523",
+        "Node833",
+        "Node1077"
+      ],
+      "intersection_dir": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections",
+      "intersection_files": [
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node490.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node488.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node483.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node477.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node470.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node465.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node450.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node437.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node423.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node523.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node833.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/intersections/fnm_intersection_Node1077.yml"
+      ],
+      "ev_cfg": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency1/fnm_ev_emergency1.yml"
+    },
+    "emergency2": {
+      "n_tls": 13,
+      "tls_ids": [
+        "Node640",
+        "Node623",
+        "Node600",
+        "Node523",
+        "Node437",
+        "Node363",
+        "Node310",
+        "Node272",
+        "Node230",
+        "Node193",
+        "Node185",
+        "Node90",
+        "Node52"
+      ],
+      "intersection_dir": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections",
+      "intersection_files": [
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node640.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node623.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node600.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node523.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node437.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node363.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node310.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node272.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node230.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node193.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node185.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node90.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/intersections/fnm_intersection_Node52.yml"
+      ],
+      "ev_cfg": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency2/fnm_ev_emergency2.yml"
+    },
+    "emergency3": {
+      "n_tls": 9,
+      "tls_ids": [
+        "Node1176",
+        "Node1101",
+        "Node914",
+        "Node490",
+        "Node400",
+        "Node342",
+        "Node286",
+        "Node230",
+        "Node267"
+      ],
+      "intersection_dir": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections",
+      "intersection_files": [
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node1176.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node1101.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node914.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node490.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node400.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node342.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node286.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node230.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/intersections/fnm_intersection_Node267.yml"
+      ],
+      "ev_cfg": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency3/fnm_ev_emergency3.yml"
+    },
+    "emergency4": {
+      "n_tls": 13,
+      "tls_ids": [
+        "Node640",
+        "Node623",
+        "Node600",
+        "Node523",
+        "Node437",
+        "Node363",
+        "Node310",
+        "Node272",
+        "Node230",
+        "Node193",
+        "Node185",
+        "Node90",
+        "Node52"
+      ],
+      "intersection_dir": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections",
+      "intersection_files": [
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node640.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node623.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node600.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node523.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node437.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node363.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node310.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node272.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node230.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node193.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node185.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node90.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/intersections/fnm_intersection_Node52.yml"
+      ],
+      "ev_cfg": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency4/fnm_ev_emergency4.yml"
+    },
+    "emergency5": {
+      "n_tls": 4,
+      "tls_ids": [
+        "Node1158",
+        "Node1232",
+        "Node1248",
+        "Node1251"
+      ],
+      "intersection_dir": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency5/intersections",
+      "intersection_files": [
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency5/intersections/fnm_intersection_Node1158.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency5/intersections/fnm_intersection_Node1232.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency5/intersections/fnm_intersection_Node1248.yml",
+        "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency5/intersections/fnm_intersection_Node1251.yml"
+      ],
+      "ev_cfg": "/home/christian/projects/fdt_prototype/sample_world/real_map/paper_experiments/config/fnm/batch/emergency5/fnm_ev_emergency5.yml"
+    }
+  },
+  "union": {}
+}

@@ -1,0 +1,13 @@
+aerial_system/
+backup/
+diagrams/
+figures
+scenario_runs/
+tmp/
+analysis/
+*.log
+*.xml
+*.csv
+*.h5
+paper_results/
+Miniconda3-latest-Linux-x86_64.sh

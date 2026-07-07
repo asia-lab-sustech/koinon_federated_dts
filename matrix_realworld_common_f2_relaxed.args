@@ -1,0 +1,205 @@
+--sumo-bin sumo
+--mqtt-host localhost
+--vehicles veh0001,veh0002,veh0003
+--tls-nodes auto
+--agent-subset-neighbor-hops 2
+--step-length 0.1
+--terminate-on-ev-finish
+--loop-sense-period-sec 1.0
+--publish-step-period-sec 1.0
+--publish-vehicle-period-sec 1.0
+--publish-tls-state-period-sec 1.0
+--publish-tls-lanes-period-sec -1
+--print-period-sec 1.0
+--main-loop-sleep-sec 0
+--no-shadow
+--perf-log-period-sec 1.0
+--fed-debug
+--fed-enable-warmup
+--fed-warmup-period-sec 0.5
+--fed-readiness-use-improved-queue
+--b1-strict-local-baseline-enable
+--ev-intersection-discovery-enable
+--ev-intersection-discovery-delay-sec 0.5
+--ev-intersection-discovery-modes B1
+--ev-intersection-discovery-repeat-scope edge
+--ev-intersection-discovery-wait-log-period-sec 1.0
+--no-b1-downstream-blockage-guard-enable
+--b1-downstream-blockage-lookahead-edges 3
+--b1-downstream-blockage-min-halt-n 3
+--b1-downstream-blockage-max-mean-speed-mps 1.0
+--b1-downstream-blockage-min-veh-n 2
+--b1-downstream-blockage-max-occupancy-pct 35.0
+--downstream-immediate-blockage-guard-enable
+--downstream-immediate-blockage-max-worst-edge-offset 1
+--downstream-immediate-blockage-min-halt-n 3
+--downstream-immediate-blockage-min-veh-n 6
+--downstream-immediate-blockage-max-mean-speed-mps 0.5
+--b1-lookahead-actuation-guard-enable
+--b1-lookahead-full-preemption-distance-m 70
+--b1-lookahead-warmup-max-extension-sec 4.0
+--b1-lookahead-upstream-stop-speed-mps 0.5
+--b1-lookahead-upstream-stop-min-distance-m 30
+--b1-lookahead-skip-upstream-stopped-enable
+--ev-edge-source traci
+--disable-ers
+--auto-induction-loops
+--loop-sense-scope ev-active
+--loop-sense-active-hops 4
+
+--federation-bootstrap-enable
+--federation-bootstrap-profile none
+--federation-bootstrap-participants hub
+--federation-bootstrap-gateway-id gw-realworld-main
+--federation-bootstrap-node-id realworld-main
+--federation-bootstrap-role simulation_hub
+--federation-bootstrap-domain traffic
+--federation-bootstrap-heartbeat-sec 5
+--federation-bootstrap-catalog-sec 20
+--federation-bootstrap-cadence-mode sim
+
+--federation-peer-selection-source fnm
+--federation-bootstrap-discovery-probe-sec 0
+--federation-bootstrap-discovery-query-topic federation/discovery/query
+--federation-bootstrap-discovery-reply-prefix federation/discovery/resp
+--federation-bootstrap-discovery-event-filter state
+--no-federation-bootstrap-discovery-target-filter-enable
+--federation-bootstrap-active-member-statuses ACTIVE,REGISTERED,ONBOARDING,ALIVE
+
+--agent-subset ev-route
+--apply-corridor-route-advice
+--route-apply-in-modes advisory,arbitration
+--route-apply-cooldown-sec 10
+--route-apply-min-improvement-sec 8
+--route-apply-min-improvement-ratio 0.15
+
+--ev-request-delivery mqtt
+--ev-request-topic-prefix federation/ev/request
+--disable-internal-ev-request-generation
+--ev-http-state-server-enable
+--ev-http-state-server-host 127.0.0.1
+--ev-http-state-server-verbose
+--ev-pipeline-log-period-sec 1.0
+--ev-state-trace-period-sec 1.0
+--ev-request-source-tag fnm_http
+--fed-ev-request-deterministic-apply-enable
+--fed-ev-request-deterministic-grace-sec 0.30
+--fed-ev-request-deterministic-max-buffer-sec 2.0
+--fed-ev-request-wait-for-fnm-enable
+--fed-ev-request-wait-for-fnm-timeout-sec 0.25
+--fed-ev-request-wait-for-fnm-poll-sec 0.01
+--fed-ev-request-wait-for-fnm-retry-sim-sec 0.50
+--no-fed-ev-request-wait-for-fnm-raw-dispatch-enable
+--tls-signal-trace-enable
+--no-ev-local-state-mqtt
+--loop-deploy-scope ev-route
+
+--f2-selection-policy measured
+--f2-measured-override-min-robust-improvement 0.35
+--f2-measured-override-min-ev-wait-improvement-sec 1.0
+--f2-measured-override-min-ev-miss-improvement-sec 0.10
+--no-f2-refine-require-loop-coverage
+--f2-refine-min-loop-coverage-ratio 0.2
+--f2-refine-require-feedback
+--f2-refine-feedback-max-age-sec 12.5
+--f2-refine-feedback-max-age-near-sec 8.5
+--f2-refine-feedback-max-age-far-sec 14.5
+--no-f2-refine-feedback-age-adaptive-enable
+--no-f2-refine-feedback-bootstrap-enable
+--f2-refine-feedback-bootstrap-distance-m 140
+--f2-refine-feedback-bootstrap-max-age-sec 8
+--f2-refine-neighbor-state-fallback-enable
+--f2-refine-neighbor-state-max-age-sec 5.0
+--f2-refine-neighbor-state-near-max-age-sec 2.5
+--f2-refine-stale-feedback-gate-enable
+--f2-refine-max-responder-phase-state-age-ms 8200
+--f2-refine-near-distance-m 30
+--f2-refine-near-max-responder-phase-state-age-ms 3600
+--no-f2-refine-require-preferred-feedback-when-near
+
+--f2-skip-redundant-apply
+--f2-skip-redundant-apply-min-interval-sec 1.0
+--f2-skip-redundant-apply-min-interval-near-sec 0.35
+--f2-skip-redundant-apply-min-interval-far-sec 1.4
+--f2-skip-redundant-apply-near-distance-m 140
+--f2-skip-redundant-apply-far-distance-m 320
+
+--f2-offer-preapply-dedupe-min-interval-sec 1.0
+--f2-offer-preapply-dedupe-min-interval-near-sec 0.40
+--f2-offer-preapply-dedupe-min-interval-far-sec 1.4
+--f2-offer-preapply-dedupe-near-distance-m 140
+--f2-offer-preapply-dedupe-far-distance-m 320
+
+--f2-selected-offer-min-effective-extend-sec 1.5
+--f2-selected-offer-recompute-local-fallback
+--f2-selected-none-slow-ev-guard-enable
+--f2-selected-none-slow-ev-guard-max-speed-mps 3.0
+--f2-selected-none-slow-ev-guard-min-distance-m 40.0
+--f2-selected-none-slow-ev-guard-plan-types saturation_reduction,intrusive
+--f2-fallback-slow-ev-guard-enable
+--f2-fallback-slow-ev-guard-max-speed-mps 3.0
+--f2-fallback-slow-ev-guard-min-distance-m 40.0
+--f2-fallback-slow-ev-guard-plan-types saturation_reduction,intrusive
+--f2-fallback-cadence-guard-enable
+--f2-fallback-cadence-min-interval-sec 0.6
+--f2-fallback-cadence-min-distance-m 30.0
+--f2-fallback-cadence-plan-types saturation_reduction,intrusive
+--f2-lookahead-upstream-stopped-rescue-enable
+--f2-lookahead-upstream-stopped-rescue-max-distance-m 220
+--f2-lookahead-upstream-stopped-rescue-max-hops 1
+--f2-lookahead-upstream-stopped-rescue-extension-sec 4.0
+--f2-downstream-apply-guard-enable
+--f2-downstream-apply-guard-lookahead-edges 8
+--f2-downstream-apply-guard-max-worst-edge-offset 3
+--f2-downstream-apply-guard-min-halt-n 3
+--f2-downstream-apply-guard-max-mean-speed-mps 1.0
+--f2-downstream-apply-guard-min-veh-n 3
+--f2-downstream-apply-guard-max-occupancy-pct 35.0
+--f2-weak-offer-last-local-fallback-enable
+--f2-weak-offer-last-local-fallback-max-age-sec 12.0
+--f2p-passive-context-policy immediate_missing_severe
+--f2p-passive-context-max-age-sec 6.0
+--f2p-passive-context-lookahead-edges 4
+--f2p-passive-context-max-worst-edge-offset 1
+--f2p-active-tls-metering-floor-enable
+--f2p-active-tls-metering-floor-max-worst-edge-offset 1
+--f2p-passive-context-severe-min-halt-n 4
+--f2p-passive-context-severe-min-veh-n 6
+--f2p-passive-context-severe-max-mean-speed-mps 0.5
+--f2p-passive-context-severe-max-occupancy-pct 45.0
+--f2p-passive-context-missing-feedback-floor-enable
+--f2p-passive-context-missing-feedback-max-queue-deficit-sec 2.0
+--f2p-passive-context-missing-feedback-max-spillback-risk 0.15
+--f2p-passive-context-missing-feedback-max-timing-sec 1.0
+--f2p-passive-context-clear-missing-feedback-enable
+--f2p-passive-context-clear-missing-feedback-no-feedback-penalty 0.10
+--f2p-passive-stall-rescue-enable
+--f2p-passive-stall-rescue-min-blocked-sec 2.0
+--f2p-passive-stall-rescue-max-speed-mps 2.0
+--no-f2p-passive-stall-rescue-require-selected-edge
+--passive-intersection-context-route-fanout-enable
+--passive-intersection-context-fanout-back-edges 2
+--passive-intersection-context-fanout-forward-edges 4
+
+--f2-refine-local-cooldown-enable
+--f2-refine-local-cooldown-trigger-count 3
+--f2-refine-local-cooldown-window-sec 2.0
+--f2-refine-local-cooldown-near-distance-m 30
+--f2-usefulness-gate-enable
+--f2-usefulness-gate-skip-streak-trigger 2
+--f2-usefulness-gate-hold-sec 10.0
+--f2-usefulness-gate-near-distance-m 180
+--f2-usefulness-gate-failsoft-local
+--f2-strict-b1-floor-enable
+--f2-strict-b1-floor-peer-override-only
+
+--fed-req-send-min-gap-sec 0.48
+--fed-req-send-min-gap-near-sec 0.30
+--fed-req-send-min-gap-far-sec 0.68
+--fed-req-send-min-gap-near-distance-m 140
+--fed-req-send-min-gap-far-distance-m 320
+--fed-req-pending-per-peer-cap 2
+--fed-req-pending-stale-sec 6.0
+
+--no-fed-hard-window-adaptive-relax-enable
+--no-f2-active-coord-window-relax-enable

@@ -1,0 +1,67 @@
+node:
+  dt_id: "veh2"
+  dt_type: "vehicle"
+  instance: "lab"
+
+  communication:
+    internal_event_bus: &internal_bus
+      kind: "mqtt"
+      broker:
+        host: "mqtt-internal"     # IMPORTANT: service name in compose, not localhost
+        port: 1883
+        keepalive_s: 30
+      topics:
+        publish:
+          state: "dt/vehicle/{}/state"
+          capabilities_raw: "dt/vehicle/{dt_id}/capabilities/raw"
+          heartbeat: "dt/vehicle/{dt_id}/heartbeat"
+        subscribe:
+          cmd_raw: "dt/vehicle/{dt_id}/cmd"
+          policy_update: "dt/vehicle/{dt_id}/policy"
+
+    federation_event_bus: &federation_bus
+      kind: "mqtt"
+      broker:
+        host: localhost #"mqtt-federation"   # IMPORTANT: service name in compose, not localhost
+        port: 1883                # container port; host mapping can be 2883
+        keepalive_s: 30
+      topics:
+        publish:
+          state: "fdt/state/vehicle/{dt_id}"
+          events: "fdt/events/vehicle/{dt_id}"
+          descriptor: "fdt/descriptor/vehicle/{dt_id}"
+          status: "fdt/status/vehicle/{dt_id}"
+          decision_proposal: "fdt/decision/proposal/vehicle/{dt_id}"
+        subscribe:
+          cmd: "fdt/cmd/vehicle/{dt_id}"
+          decision_reply: "fdt/decision/reply/vehicle/{dt_id}"
+
+  qos:
+    internal_event_bus:
+      publish: { state_raw: 0, capabilities_raw: 1, heartbeat: 0 }
+      subscribe: { cmd_raw: 1 }
+    federation_event_bus:
+      publish: { state: 1, descriptor: 1, decision_proposal: 1 }
+      subscribe: { cmd: 1 }
+ 
+  retain:
+    internal_event_bus:
+      publish: { capabilities_raw: true }
+    federation_event_bus:
+      publish: { descriptor: true, state: true }
+
+services:
+  dt_core:
+    uses_bus: "internal_event_bus"
+    bindings:
+      publish: ["state_raw", "capabilities_raw", "heartbeat"]
+      subscribe: ["cmd_raw"]
+
+  connector:
+    bindings:
+      internal:
+        subscribe: ["state_raw", "capabilities_raw", "heartbeat"]
+        publish: ["cmd_raw"]              # if connector issues DT-native commands
+      federation:
+        publish: ["state", "events", "descriptor", "status", "decision_proposal"]
+        subscribe: ["cmd", "decision_reply"]

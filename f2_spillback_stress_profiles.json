@@ -1,0 +1,48 @@
+{
+  "description": "Configurable spillback stress profiles for F2-vs-B1 experiments. target_edges are the operational stress target; target_tls is metadata for interpretation and plots.",
+  "profiles": [
+    {
+      "id": "r1_downstream_node488_490_spillback",
+      "route_ids": [1],
+      "target_tls": ["Node488", "Node490"],
+      "target_edges": [
+        "EdgeNode483-Node488",
+        "EdgeNode488-Node490"
+      ],
+      "share": 0.95,
+      "selection_basis": "candidates",
+      "min_overlap_edges": 1,
+      "depart_offset": "-70,45",
+      "depart_profile": "platoon",
+      "platoon_period_sec": 0.55,
+      "platoon_jitter_sec": 0.08
+    },
+    {
+      "id": "r4_downstream_node488_490_spillback",
+      "route_ids": [4],
+      "target_tls": ["Node488", "Node490"],
+      "target_edges": [
+        "EdgeNode483-Node488",
+        "EdgeNode488-Node490"
+      ],
+      "share": 0.95,
+      "selection_basis": "candidates",
+      "min_overlap_edges": 1,
+      "depart_offset": "-70,45",
+      "depart_profile": "platoon",
+      "platoon_period_sec": 0.55,
+      "platoon_jitter_sec": 0.08
+    },
+    {
+      "id": "generic_downstream_spillback",
+      "edge_window": "0.45,1.00",
+      "share": 0.90,
+      "selection_basis": "candidates",
+      "min_overlap_edges": 3,
+      "depart_offset": "-60,60",
+      "depart_profile": "platoon",
+      "platoon_period_sec": 0.80,
+      "platoon_jitter_sec": 0.15
+    }
+  ]
+}

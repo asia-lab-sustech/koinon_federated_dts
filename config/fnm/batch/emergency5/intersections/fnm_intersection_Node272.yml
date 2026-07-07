@@ -1,0 +1,194 @@
+node:
+  dt_id: Node272
+  dt_type: TrafficLightSystem
+  gateway_id: gw-tls-node272
+  domain: traffic
+  capabilities:
+  - intersection_state_publish
+  - coordination_event_publish
+  - coordination_artifact_consume
+  communication:
+    topic_namespace: ''
+    internal_event_bus:
+      kind: mqtt
+      broker:
+        host: 127.0.0.1
+        port: 1883
+      topics:
+        publish:
+          state: rw/tls/{dt_id}/state
+          events: rw/tls/{dt_id}/events
+        subscribe:
+          cmd: rw/tls/{dt_id}/cmd
+    federation_event_bus:
+      kind: mqtt
+      broker:
+        host: 127.0.0.1
+        port: 1883
+      topics:
+        publish:
+          state: federation/v1/state/intersection/{dt_id}
+          events: federation/v1/event/intersection/{dt_id}
+        subscribe:
+          coord_request: federation/v1/coord/request/{dt_id}
+          coord_decision: federation/v1/coord/decision/{dt_id}
+    topic_map:
+      rules:
+      - name: intersection_state_up
+        direction: local_to_fed
+        subscribe_topic: rw/tls/{dt_id}/state
+        publish_topic: federation/v1/state/intersection/{dt_id}
+        event_type: IntersectionState
+      - name: intersection_events_up
+        direction: local_to_fed
+        subscribe_topic: rw/tls/{dt_id}/events
+        publish_topic: federation/v1/event/intersection/{dt_id}
+        event_type: IntersectionEvent
+      - name: coord_request_down
+        direction: fed_to_local
+        subscribe_topic: federation/v1/coord/request/{dt_id}
+        publish_topic: rw/tls/{dt_id}/cmd
+        event_type: CoordinationRequest
+      - name: coord_decision_down
+        direction: fed_to_local
+        subscribe_topic: federation/v1/coord/decision/{dt_id}
+        publish_topic: rw/tls/{dt_id}/cmd
+        event_type: PreemptionDecision
+    monitor:
+      rules:
+      - name: tls_local_state_observed
+        source: local
+        kind: state
+        subscribe_topic: rw/tls/{dt_id}/state
+        state_key: monitor.tls.state.{dt_id}
+      - name: ev_state_seen
+        source: federation
+        kind: state
+        subscribe_topic: federation/v1/state/ev/+
+        state_key: monitor.ev.state.{source_dt_id}
+      - name: neighbor_state_seen
+        source: federation
+        kind: state
+        subscribe_topic: federation/v1/state/intersection/+
+        state_key: monitor.neighbor.state.{source_dt_id}
+      - name: neighbor_event_seen
+        source: federation
+        kind: event
+        subscribe_topic: federation/v1/event/intersection/+
+        event_name: monitor.neighbor.event
+  protocol_adaptation:
+    http_state_pull:
+      enabled: false
+      url: ''
+      period_sec: 1.0
+      timeout_sec: 0.8
+      max_next_tls: 1
+      default_delta_sec: 2.0
+      source_service: federation_node_manager.tls_adapter
+      source_tag: fnm_tls
+      ev_request_topic_prefix: federation/ev/request
+  federation:
+    membership_register_topic: federation/membership/register
+    membership_heartbeat_topic: federation/membership/heartbeat
+    catalog_upsert_topic: federation/catalog/upsert
+    heartbeat_interval_sec: 5.0
+    catalog_interval_sec: 20.0
+  federation_context:
+    enabled: true
+    selection_policy_name: transport_ev_corridor
+    selection_policy:
+      name: transport_ev_corridor
+      allow_fallback_without_route: true
+      prefer_forward_only: false
+      use_next_tls_order_when_route_missing: true
+      max_candidates_min: 4
+      max_candidates_max: 12
+      rank_weights:
+        route_order: 1.0
+        proximity_m: 1.0
+      route_backward_penalty: 1000.0
+      distance_unknown_penalty: 1000000000.0
+      route_unknown_penalty: 1000000000.0
+    query_enabled: false
+    query_interval_sec: 5.0
+    query_periodic_refresh_sec: 5.0
+    query_on_context_change: false
+    query_context_change_min_interval_sec: 5.0
+    query_context_stable_suppress_sec: 0.0
+    query_idle_suspend_sec: 0.0
+    query_idle_suspend_log_cooldown_sec: 0.0
+    peer_ttl_sec: 30.0
+    snapshot_interval_sec: 2.0
+    fail_open: true
+    result_mode: service
+    discovery_node_dedup: true
+    max_results: 50
+    query_require_valid_context: true
+    query_require_complete_context: false
+    query_min_route_len: 1
+    query_skip_log_cooldown_sec: 3.0
+    keep_last_valid_context: true
+    valid_context_hold_sec: 60.0
+    hold_peers_without_context: true
+    hold_peers_max_sec: 60.0
+    min_active_members_before_query: 0
+    query_startup_grace_sec: 6.0
+    peer_hysteresis_min_hold_sec: 10.0
+    peer_change_window_sec: 0.0
+    peer_change_max_add: 0
+    discovery_query_topic: federation/discovery/query
+    discovery_reply_prefix: federation/discovery/resp
+    discovery_event_filter: state,event,request,decision
+    discovery_purpose: fnm_fcm
+    role_filter: TrafficLightSystem
+    discovery_service_names:
+    - intersection_state_up
+    - intersection_events_up
+    - coord_request_down
+    - coord_decision_down
+    discovery_directions:
+    - local_to_fed
+    - fed_to_local
+    - bidirectional
+    discovery_capabilities:
+    - intersection_state_publish
+    - coordination_event_publish
+    - coordination_artifact_consume
+    discovery_status_filters:
+    - ACTIVE
+    - REGISTERED
+    - ALIVE
+    require_active_membership: true
+    active_member_statuses: ACTIVE,REGISTERED,ALIVE
+    context_gate_enabled: true
+    context_back_hops: 2
+    context_max_candidates: 8
+    membership_state_topic: federation/membership/state
+    membership_events_topic: federation/membership/events
+  dt_profile:
+    dt_description: Smart intersection DT with local preemption logic and federation
+      coordination artifacts (Node272)
+    geo_scope:
+      type: city
+      city: Madrid
+      zone: short_area
+      network: madrid_short_area
+      id: tls.node272
+    policy_tags:
+    - research
+    - intersection
+    qos_sla:
+      update_period_sec: 1.0
+      latency_budget_ms: 500.0
+      availability_target: best_effort
+    interface_version: federation.node.manager.min.v1
+    ownership:
+      organization: ASIA Lab
+      domain: smart_mobility
+      operator: simulation
+  data_manager:
+    enabled: true
+    base_dir: ./tmp/fnm_data
+    run_id: ''
+    persist_raw_messages: true
+    persist_manifest: true
